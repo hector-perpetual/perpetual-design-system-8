@@ -41,3 +41,7 @@ Abre `perpetual-fintech.html` en cualquier navegador.
 
 ---
 Confidencial · Perpetual Technologies © 2026
+
+## Marca (fuente de verdad)
+
+La carpeta `brand/` contiene los tokens, componentes y reglas de marca de Perpetual (SKILL.md + references). Este repo es autosuficiente: diseno, fuentes (Armin Grotesk embebida), logos y reglas de marca en un solo lugar.
