@@ -227,10 +227,13 @@ def line_icon(x, y, size, color, name, circle=True):
 # 1. Portada -----------------------------------------------------------------
 def s01():
     return (box(0, 4.7, 13.333, 2.8, fill=ACCENT)
-            + blob(9.2, -1.0, 3.3, YELLOW) + blob(11.7, 2.1, 1.9, ACCENT2) + blob(8.2, 1.4, 3.4, ACCENT)
-            + hexagon(8.75, 2.25, 2.0, WHITE) + box(9.45, 2.9, 0.66, 0.66, fill=ACCENT, oval=True)
-            + blob(11.5, 4.6, 0.8, YELLOW)
-            + txt(12.35, 0.55, 0.7, 0.6, "+", 28, ACCENT, 800)
+            # trail diagonal de circulos crecientes (abajo-izq -> arriba-der, azul -> naranja)
+            + blob(8.4, 5.2, 0.35, ACCENT)
+            + blob(9.15, 4.45, 0.5, "#3b82f6")
+            + blob(9.95, 3.65, 0.68, ACCENT)
+            + blob(10.85, 2.8, 0.9, ACCENT2)
+            + blob(11.95, 1.7, 1.2, ACCENT2)
+            + blob(8.05, 1.7, 0.42, YELLOW)
             + logo(0.7, 0.7, 1.5)
             + txt(0.65, 1.55, 7.2, 2.0, f"Financial<br>{AC('Technology.')}", 46, TEXT, 800, lh=0.98)
             + txt(0.7, 3.5, 6.6, 0.4, "Tecnologia financiera para escalar tu negocio",
