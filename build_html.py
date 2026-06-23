@@ -195,8 +195,33 @@ def brand_panel(x, y, w, h, tint, variant="abstract", label=None):
     return "".join(out)
 
 
-def hex_icon(x, y, d, fill):
-    return hexagon(x, y, d, fill) + box(x + d * 0.34, y + d * 0.34, d * 0.32, d * 0.32, fill=WHITE, oval=True)
+ICONS = {
+ "estrategia": '<line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><circle cx="12" cy="12" r="7"/><polygon points="12,8 14.5,13.5 12,12.5 9.5,13.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+ "crecimiento": '<polyline points="3,17 8,10 13,13 20,5"/><polyline points="15,5 20,5 20,10"/>',
+ "analitica": '<rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>',
+ "inversion": '<circle cx="12" cy="12" r="9"/><path d="M9 14.5c0 1.1 1.3 2 3 2s3-.9 3-2-1.3-2-3-2-3-.9-3-2 1.3-2 3-2 3 .9 3 2"/><line x1="12" y1="7.5" x2="12" y2="9"/><line x1="12" y1="17" x2="12" y2="18.5"/>',
+ "idea": '<path d="M9 21h6"/><path d="M10 17h4"/><path d="M12 3a6 6 0 0 1 6 6c0 2.2-1.2 4.1-3 5.2V17H9v-2.8A6 6 0 0 1 6 9a6 6 0 0 1 6-6z"/>',
+ "equipo": '<circle cx="9" cy="7" r="3"/><path d="M3 21v-2a5 5 0 0 1 5-5h2"/><circle cx="17" cy="9" r="3"/><path d="M13 21v-2a5 5 0 0 1 5-5h1a5 5 0 0 1 5 5v2"/>',
+ "objetivo": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>',
+ "mercado": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18"/><path d="M12 3a15 15 0 0 0 0 18"/>',
+ "producto": '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+ "automatizacion": '<path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><polyline points="18,2 22,2 22,6"/>',
+ "tiempo": '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="7" y1="14" x2="11" y2="14"/><line x1="7" y1="17" x2="15" y2="17"/>',
+ "seguridad": '<path d="M12 3l8 4v5c0 4.4-3.4 8.5-8 9.5C7.4 20.5 4 16.4 4 12V7z"/><polyline points="9,12 11,14 15,10"/>',
+ "alcance": '<path d="M5.5 5.5A8.38 8.38 0 0 0 3 12a9 9 0 0 0 9 9 9 9 0 0 0 9-9 8.38 8.38 0 0 0-2.5-6.5"/><path d="M8.5 8.5A4.24 4.24 0 0 0 7 12a5 5 0 0 0 5 5 5 5 0 0 0 5-5 4.24 4.24 0 0 0-1.5-3.5"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>',
+ "innovacion": '<circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+}
+
+
+def line_icon(x, y, size, color, name, circle=True):
+    inner = ICONS[name]
+    isz = size * 96 * 0.5
+    svg = (f'<svg viewBox="0 0 24 24" width="{isz:.0f}" height="{isz:.0f}" fill="none" '
+           f'stroke="{color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{inner}</svg>')
+    base = f"position:absolute;left:{_p(x)};top:{_p(y)};width:{_p(size)};height:{_p(size)};display:flex;align-items:center;justify-content:center;"
+    if circle:
+        base += f"border-radius:50%;background:{color}1f;"
+    return f'<div style="{base}">{svg}</div>'
 
 
 # 1. Portada -----------------------------------------------------------------
@@ -231,7 +256,7 @@ def s02():
             + brand_panel(3.45, 4.35, 2.55, 2.05, "#FDE9D6", "abstract", "Ahorro")
             # card azul "Explorar"
             + box(6.9, 2.5, 5.7, 4.0, fill=ACCENT, r=16, shadow=True)
-            + hex_icon(7.4, 2.95, 0.9, WHITE)
+            + line_icon(7.4, 2.95, 0.9, "#ffffff", "inversion")
             + txt(7.4, 4.0, 4.8, 0.5, "Gestion patrimonial digital", 17, WHITE, 700)
             + txt(7.4, 4.6, 4.8, 1.0, "Portafolios automatizados y alertas en tiempo real, con cumplimiento normativo integrado.",
                   12, DBE4FF, 400, lh=1.35)
@@ -253,7 +278,7 @@ def s03():
                 txt(x + 0.3, 3.05, 1.55, 0.7, v, 30, col, 800),
                 txt(x + 0.3, 3.95, 1.55, 0.65, lbl, 9.5, MUTED, 600, lh=1.2)]
     out += [box(7.45, 2.8, 5.15, 3.9, fill=ACCENT, r=16, shadow=True),
-            hex_icon(7.95, 3.25, 0.85, WHITE),
+            line_icon(7.95, 3.25, 0.85, "#ffffff", "crecimiento"),
             txt(7.95, 4.25, 4.3, 0.5, "Escala sin friccion", 17, WHITE, 700),
             txt(7.95, 4.85, 4.3, 1.4,
                 "Infraestructura cloud que crece con tu volumen: APIs de pago, conciliacion automatica y reportes en vivo.",
@@ -276,7 +301,7 @@ def s04():
             + txt(7.1, 4.15, 2.3, 0.5, "creciendo<br>cada ano", 12, MUTED, 600, "center", lh=1.25)
             # tarjeta naranja con icono
             + box(9.9, 1.7, 2.7, 4.6, fill=ACCENT2, r=16, shadow=True)
-            + hex_icon(10.35, 2.2, 0.85, WHITE)
+            + line_icon(10.35, 2.2, 0.85, "#ffffff", "seguridad")
             + txt(10.25, 3.25, 2.0, 0.5, "Proteccion activa", 14, WHITE, 700, lh=1.1)
             + txt(10.25, 3.95, 2.0, 1.7, "Monitoreo antifraude 24/7 y respaldo de fondos segregados.",
                   11.5, WHITE, 400, lh=1.4)
@@ -305,7 +330,7 @@ def s06():
     out = [title(f"Construyendo una base {AC('solida.')}", size=30),
            # card azul
            box(0.7, 2.6, 4.5, 3.9, fill=ACCENT, r=16, shadow=True),
-           hex_icon(1.15, 3.05, 0.9, WHITE),
+           line_icon(1.15, 3.05, 0.9, "#ffffff", "equipo"),
            txt(1.15, 4.15, 3.6, 0.9, "354+", 46, WHITE, 800),
            txt(1.15, 5.15, 3.6, 0.5, "clientes satisfechos en la region", 12, DBE4FF, 400, lh=1.3)]
     reasons = [("Confianza comprobada", "Calificacion de 4.8/5 en soporte y disponibilidad del servicio."),
@@ -346,17 +371,17 @@ def s07():
 def s08():
     out = [title(f"Una economia digital mas {AC('fuerte.')}", size=28),
            txt(0.7, 2.0, 5.0, 0.4, "Hacia donde vamos y como lo logramos.", 12.5, MUTED, 400)]
-    cols = [("Destino", [("Inclusion financiera", "Servicios para segmentos historicamente no bancarizados."),
-                         ("Liquidez en tiempo real", "Pagos y cobros que se liquidan al instante.")], ACCENT),
-            ("Servicios", [("Pasarela de pagos", "Aceptacion omnicanal con conciliacion automatica."),
-                           ("Banca como servicio", "Cuentas y tarjetas embebidas via API.")], ACCENT2)]
+    cols = [("Destino", [("Inclusion financiera", "Servicios para segmentos historicamente no bancarizados.", "alcance"),
+                         ("Liquidez en tiempo real", "Pagos y cobros que se liquidan al instante.", "tiempo")], ACCENT),
+            ("Servicios", [("Pasarela de pagos", "Aceptacion omnicanal con conciliacion automatica.", "producto"),
+                           ("Banca como servicio", "Cuentas y tarjetas embebidas via API.", "automatizacion")], ACCENT2)]
     for ci, (head, items, col) in enumerate(cols):
         x = 0.7 + ci * 6.2
         out += [txt(x, 2.65, 5.6, 0.4, head, 14, col, 700, upper=True, spacing=0.8)]
-        for ii, (t, d) in enumerate(items):
+        for ii, (t, d, ic) in enumerate(items):
             y = 3.2 + ii * 1.65
             out += [box(x, y, 5.7, 1.45, fill=SURFACE, r=14, line=BORDER),
-                    hex_icon(x + 0.35, y + 0.42, 0.6, col),
+                    line_icon(x + 0.35, y + 0.42, 0.6, col, ic),
                     txt(x + 1.25, y + 0.3, 4.2, 0.4, t, 13, TEXT, 700),
                     txt(x + 1.25, y + 0.72, 4.2, 0.6, d, 11, MUTED, 400, lh=1.3)]
     out.append(footer(8))
@@ -370,14 +395,14 @@ def s09():
            logo(0.7, 0.6, 1.5, dark=True),
            txt(0.7, 1.45, 8.0, 1.0, "Gracias", 52, WHITE, 800),
            txt(0.7, 3.55, 8.0, 0.5, f"Hablemos de tu proximo proyecto {AC('fintech.')}", 17, TEXT, 700)]
-    contacts = [("Telefono", "+51 999 888 777"), ("Correo", "hola@perpetual.pe"),
-                ("Web", "perpetual.pe"), ("Direccion", "Lima, Peru")]
-    for i, (t, v) in enumerate(contacts):
+    contacts = [("Telefono", "+51 999 888 777", "equipo"), ("Correo", "hola@perpetual.pe", "idea"),
+                ("Web", "perpetual.pe", "alcance"), ("Direccion", "Lima, Peru", "objetivo")]
+    for i, (t, v, ic) in enumerate(contacts):
         col = i % 2
         row = i // 2
         x = 0.7 + col * 6.2
         y = 4.55 + row * 1.2
-        out += [hex_icon(x, y, 0.7, ACCENT),
+        out += [line_icon(x, y, 0.7, ACCENT, ic),
                 txt(x + 0.95, y - 0.02, 5.0, 0.32, t, 10.5, ACCENT, 600, upper=True, spacing=0.6),
                 txt(x + 0.95, y + 0.32, 5.0, 0.4, v, 15, TEXT, 700)]
     out.append(footer(9))
