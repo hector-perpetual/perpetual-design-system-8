@@ -110,7 +110,7 @@ def graphic(x, y, w, h, tint="#DBE7FB", variant="abstract", r=12, shadow=False):
             bh = h * (0.16 + 0.13 * i)
             out.append(box(bx + i * (bw + gap), base - bh, bw, bh, fill=cols[i], r=4))
         out.append(box(cx - w * 0.3, y + h * 0.16, h * 0.2, h * 0.2, fill=ACCENT, oval=True))
-        out.append(hexagon(cx + w * 0.16, y + h * 0.14, h * 0.16, YELLOW))
+        out.append(box(cx + w * 0.16, y + h * 0.14, h * 0.16, h * 0.16, fill=YELLOW, oval=True))
     elif variant == "quote":
         out.append(txt(x, y + h * 0.06, w, h * 0.45, "&ldquo;", 92, ACCENT, 800, "center"))
         out.append(txt(x, y + h * 0.62, w, h * 0.2,
@@ -119,7 +119,7 @@ def graphic(x, y, w, h, tint="#DBE7FB", variant="abstract", r=12, shadow=False):
         out.append(box(cx - w * 0.28, cy - h * 0.16, h * 0.34, h * 0.34, fill=ACCENT, oval=True))
         out.append(box(cx + w * 0.03, cy - h * 0.02, h * 0.22, h * 0.22, fill=ACCENT2, oval=True))
         out.append(box(cx - w * 0.02, cy + h * 0.16, h * 0.13, h * 0.13, fill=YELLOW, oval=True))
-        out.append(hexagon(cx + w * 0.12, cy - h * 0.26, h * 0.17, WHITE))
+        out.append(box(cx + w * 0.12, cy - h * 0.26, h * 0.17, h * 0.17, fill=WHITE, oval=True))
     return "".join(out)
 
 
@@ -128,9 +128,9 @@ def title(runs, x=0.7, y=0.7, w=7.5, size=33):
 
 
 def footer(page):
-    return (logo(0.55, 7.02, 0.92)
-            + txt(1.75, 7.0, 7, 0.3, "Confidencial &middot; Perpetual Technologies &copy; 2026",
-                  8.5, MUTED, 400, "left", "middle")
+    # Solo texto + numero de slide. El logo va UNICO arriba (helper title()/portada).
+    return (txt(0.55, 7.0, 8, 0.3, "Confidencial &middot; Perpetual Technologies &copy; 2026",
+                8.5, MUTED, 400, "left", "middle")
             + txt(11.7, 7.0, 1.1, 0.3, str(page).zfill(2), 8.5, MUTED, 400, "right", "middle"))
 
 
@@ -270,7 +270,7 @@ def s02():
 # 3. Redefining Growth -------------------------------------------------------
 def s03():
     out = [title(f"Redefiniendo el {AC('crecimiento.')}"),
-           txt(0.7, 1.95, 6.5, 0.5, "Resultados que respaldan nuestra plataforma fintech.",
+           txt(0.7, 2.4, 6.5, 0.5, "Resultados que respaldan nuestra plataforma fintech.",
                13, MUTED, 400)]
     stats = [("1.200+", "Ingresos recurrentes (USD K)", ACCENT),
              ("45M", "Transacciones procesadas", ACCENT2),
@@ -373,16 +373,16 @@ def s07():
 # 8. Stronger Digital Economy ------------------------------------------------
 def s08():
     out = [title(f"Una economia digital mas {AC('fuerte.')}", size=28),
-           txt(0.7, 2.0, 5.0, 0.4, "Hacia donde vamos y como lo logramos.", 12.5, MUTED, 400)]
+           txt(0.7, 2.4, 5.0, 0.4, "Hacia donde vamos y como lo logramos.", 12.5, MUTED, 400)]
     cols = [("Destino", [("Inclusion financiera", "Servicios para segmentos historicamente no bancarizados.", "alcance"),
                          ("Liquidez en tiempo real", "Pagos y cobros que se liquidan al instante.", "tiempo")], ACCENT),
             ("Servicios", [("Pasarela de pagos", "Aceptacion omnicanal con conciliacion automatica.", "producto"),
                            ("Banca como servicio", "Cuentas y tarjetas embebidas via API.", "automatizacion")], ACCENT2)]
     for ci, (head, items, col) in enumerate(cols):
         x = 0.7 + ci * 6.2
-        out += [txt(x, 2.65, 5.6, 0.4, head, 14, col, 700, upper=True, spacing=0.8)]
+        out += [txt(x, 2.95, 5.6, 0.4, head, 14, col, 700, upper=True, spacing=0.8)]
         for ii, (t, d, ic) in enumerate(items):
-            y = 3.2 + ii * 1.65
+            y = 3.45 + ii * 1.65
             out += [box(x, y, 5.7, 1.45, fill=SURFACE, r=14, line=BORDER),
                     line_icon(x + 0.35, y + 0.42, 0.6, col, ic),
                     txt(x + 1.25, y + 0.3, 4.2, 0.4, t, 13, TEXT, 700),
